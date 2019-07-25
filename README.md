@@ -1,8 +1,8 @@
 # AWS IAM Role module
 
 This module is a simple wrapper around the aws resources `aws_iam_role` and `aws_iam_role_policy`. It creates a role 
-whose name will be prefixed with the terraform workspace and the project name and attach to it the specified inline IAM
-policies.
+whose name will be prefixed with the terraform workspace and the project name and it attaches to it the specified inline
+IAM policies.
 
 Usage:
 
@@ -16,9 +16,9 @@ module "project" {
 }
 
 /**
- * Creates an IAM role whose name will be "prod-myProject-ec2" if the terraform workspace is "prod".
- * Allow the EC2 Service to assume that role.
- * Attach to that Role an IAM policy allowing to describe any ec2 instances.
+ * Create an IAM role whose name will be "prod-myProject-ec2" if the terraform workspace is "prod".
+ * Grant that role the permission to describe any EC2 instances.
+ * Allow the EC2 Service and the IAM user john to assume that role.
  */
 module "role" {
   source  = "PGBI/iam-role/aws"
@@ -28,13 +28,8 @@ module "role" {
   name        = "ec2"
   project     = module.project
 
-  assume_role_policy = {
-    Action = "sts:AssumeRole",
-    Principal = {
-      Service = "ec2.amazonaws.com"
-    }
-    Effect = "Allow"
-  }
+  trusted_services = ["ec2.amazonaws.com"]
+  trusted_iam_arns = ["arn:aws:iam::${module.project.account_id}:user/john"]
   
   policies = {
     describe_ec2s = {

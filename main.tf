@@ -5,8 +5,20 @@ resource "aws_iam_role" "main" {
   description = var.description
   name        = "${var.project.name_prefix}-${var.name}"
   assume_role_policy = jsonencode({
-    Version   = "2012-10-17"
-    Statement = [var.assume_role_policy]
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = var.trusted_services
+      }
+      }, {
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        AWS = var.trusted_iam_arns
+      }
+    }]
   })
   tags = var.project.tags
 }

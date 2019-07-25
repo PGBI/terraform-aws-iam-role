@@ -7,9 +7,16 @@ variable "name" {
   description = "The name of the role."
 }
 
-variable "assume_role_policy" {
-  type        = object({ Action = string, Effect = string, Principal = object({ Service = string }) })
-  description = "The policy that grants an entity permission to assume the role."
+variable "trusted_iam_arns" {
+  description = "List of ARNs of IAM entities allowed to assume that Role."
+  default     = []
+  type        = list(string)
+}
+
+variable "trusted_services" {
+  description = "List of AWS Services that can assume that Role."
+  default     = []
+  type        = list(string)
 }
 
 variable "description" {
