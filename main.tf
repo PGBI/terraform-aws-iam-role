@@ -1,3 +1,7 @@
+terraform {
+  required_version = ">= 0.12"
+}
+
 /**
  * The IAM Role.
  */
@@ -11,12 +15,7 @@ resource "aws_iam_role" "main" {
       Effect = "Allow"
       Principal = {
         Service = var.trusted_services
-      }
-      }, {
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Principal = {
-        AWS = var.trusted_iam_arns
+        AWS     = var.trusted_iam_arns
       }
     }]
   })
