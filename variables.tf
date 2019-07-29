@@ -25,7 +25,7 @@ variable "description" {
 }
 
 variable "policies" {
-  type        = map(object({ Action = list(string), Effect = string, Resource = string }))
+  type        = map(object({ Action = list(string), Effect = string, Resource = list(string) }))
   description = "Map of policies to attach to the role. The map keys will be used to name the policies."
   default     = {}
 }

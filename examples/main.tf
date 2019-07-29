@@ -24,7 +24,7 @@ module "project" {
  */
 module "role" {
   source  = "PGBI/iam-role/aws"
-  version = "~>0.1.0"
+  version = "~>0.2.0"
 
   description = "Role for EC2 instances."
   name        = "ec2"
@@ -35,7 +35,7 @@ module "role" {
   policies = {
     describe_ec2s = {
       Action   = ["ec2:Describe*"]
-      Resource = "*"
+      Resource = ["*"]
       Effect   = "Allow"
     }
   }
