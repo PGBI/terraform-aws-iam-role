@@ -9,7 +9,7 @@ Usage:
 ```hcl
 module "project" {
   source  = "PGBI/project/aws"
-  version = "~>0.1.0"
+  version = "~>0.2.0"
 
   name     = "myProject"
   vcs_repo = "github.com/account/project"

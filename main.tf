@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.12.6"
 }
 
 /**
@@ -26,12 +26,12 @@ resource "aws_iam_role" "main" {
  * Attaching IAM policies to the Role.
  */
 resource "aws_iam_role_policy" "main" {
-  count = length(var.policies)
+  for_each = var.policies
 
-  name = keys(var.policies)[count.index]
+  name = each.key
   policy = jsonencode({
     Version   = "2012-10-17"
-    Statement = [values(var.policies)[count.index]]
+    Statement = [each.value]
   })
   role = aws_iam_role.main.id
 }
